@@ -56,10 +56,7 @@ const posts = [
     }
 ];
 
-
-// custom javascript
-// using a forEach to
-posts.forEach(function (element) {
+posts.forEach(element => {
     const container = document.getElementById("container");
     container.innerHTML += 
         `<div class="post">
@@ -92,4 +89,24 @@ posts.forEach(function (element) {
                     </div> 
                 </div>            
             </div>`
+});
+
+const likeButton = document.querySelectorAll(".js-like-button");
+console.log(likeButton);
+
+
+likeButton.forEach((button, index) => {
+    button.addEventListener("click",
+        function () {
+            button.classList.toggle("like-button--liked");
+            if (button.classList.contains("like-button--liked")) {
+                posts[index].likes++;
+            } else {
+                posts[index].likes--;
+            }
+
+            let likesCounter = document.getElementById("like-counter-" + posts[index].id);
+            likesCounter.innerText = posts[index].likes;
+        }
+    )    
 });
