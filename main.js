@@ -58,7 +58,7 @@ const posts = [
 
 
 // custom javascript
-// using a forEach to
+// using a forEach to print all elements inside posts
 posts.forEach(function (element) {
     const container = document.getElementById("container");
     container.innerHTML += 
@@ -87,9 +87,35 @@ posts.forEach(function (element) {
                             </a>
                         </div>
                         <div class="likes__counter">
-                            Piace a <b id="like-counter-1" class="js-likes-counter"> ${element.likes} </b> persone
+                            Piace a <b id="like-counter-${element.id}" class="js-likes-counter"> ${element.likes} </b> persone
                         </div>
                     </div> 
                 </div>            
             </div>`
+});
+
+// selecting all js-like-button
+const jsBtn = document.querySelectorAll(".js-like-button");
+// create Array to store liked Posts
+const likedPosts = [];
+// console.log(jsBtn);
+jsBtn.forEach(function( btn , i){
+    btn.addEventListener("click",
+    function () {
+        btn.classList.toggle("like-button--liked");
+        
+        if (btn.classList.contains("like-button--liked")) {
+            posts[i].likes++;
+            // pushed liked post into an array
+            likedPosts.push(posts[i]);  
+        } else {
+            posts[i].likes--;
+            // pushed liked post into an array
+            likedPosts.splice(posts[i], 1);
+        }
+        console.log(likedPosts.length);
+        let numLikes = document.getElementById("like-counter-" + posts[i].id);
+        numLikes.innerText = posts[i].likes;
+    }
+)
 });
